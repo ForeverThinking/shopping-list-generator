@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingListGenerator", "ShoppingListGenerator\ShoppingListGenerator.csproj", "{F67D992B-F1AE-45FA-B286-FB7E4B6B1C44}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingListGeneratorTests", "ShoppingListGeneratorTests\ShoppingListGeneratorTests.csproj", "{B92F1D01-38D4-412E-8A50-E6A80E6B079A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{F67D992B-F1AE-45FA-B286-FB7E4B6B1C44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F67D992B-F1AE-45FA-B286-FB7E4B6B1C44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F67D992B-F1AE-45FA-B286-FB7E4B6B1C44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B92F1D01-38D4-412E-8A50-E6A80E6B079A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B92F1D01-38D4-412E-8A50-E6A80E6B079A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B92F1D01-38D4-412E-8A50-E6A80E6B079A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B92F1D01-38D4-412E-8A50-E6A80E6B079A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
