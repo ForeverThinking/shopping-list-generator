@@ -11,10 +11,7 @@
 #
 name: "CodeQL"
 
-on:
-  push:
-    branches:
-      - "**"
+on: [push]
 
 jobs:
   analyze:
