@@ -1,2 +1,5 @@
-# shopping-list-generator
-Generate a list of ingredients from selected ingredients to use while shopping
+# Shopping List Generator
+Generate a list of ingredients from selecting recipes; useful for shopping.
+<div>
+  <img src="https://img.shields.io/github/license/foreverthinking/shopping-list-generator" />
+</div>
