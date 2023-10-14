@@ -1,8 +1,20 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Shopping List Generator";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to Your Shopping List</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col my-3">
+            <div class="card mx-auto text-center" style="width: 15rem;">
+                <div class="card-body text-centre">
+                    Click here to visit the list of recipes.
+                    <a class="nav-link" asp-action="GetRecipes" asp-controller="ShoppingListGenerator" asp-area="">Recipes</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
