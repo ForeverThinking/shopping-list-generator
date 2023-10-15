@@ -5,6 +5,7 @@ namespace ShoppingListGenerator.Services;
 public interface IShoppingListGeneratorServices
 {
     public IList<Recipe> GetAllRecipes();
+    public IList<Ingredient> GetAllIngredients();
 }
 
 public class ShoppingListGeneratorServices : IShoppingListGeneratorServices
@@ -19,5 +20,17 @@ public class ShoppingListGeneratorServices : IShoppingListGeneratorServices
         };
 
         return recipes;
+    }
+
+    public IList<Ingredient> GetAllIngredients()
+    {
+        // Change to database implementation
+        var ingredients = new List<Ingredient>
+        {
+            new() { IngredientId = 1, Name = "Red Onion" },
+            new() { IngredientId = 2, Name = "Olives" }
+        };
+
+        return ingredients;
     }
 }

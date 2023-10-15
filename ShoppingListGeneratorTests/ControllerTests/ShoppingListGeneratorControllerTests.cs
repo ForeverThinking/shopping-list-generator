@@ -37,4 +37,25 @@ public class ShoppingListGeneratorControllerTests : Controller
         var model = Assert.IsAssignableFrom<IList<Recipe>>(viewResult.ViewData.Model);
         model.Should().BeEquivalentTo(expectedResult);
     }
+    
+    [Fact]
+    public void GetIngredients_Called_ReturnsValidView()
+    {
+        // Arrange
+        var expectedResult = new List<Ingredient>()
+        {
+            new() { IngredientId = 1, Name = "Red Onion" },
+            new() { IngredientId = 2, Name = "Olives" }
+        };
+        
+        _shoppingListService.GetAllIngredients().Returns(expectedResult);
+        
+        // Act
+        var result = _underTest.GetIngredients();
+
+        // Assert
+        var viewResult = Assert.IsType<ViewResult>(result);
+        var model = Assert.IsAssignableFrom<IList<Ingredient>>(viewResult.ViewData.Model);
+        model.Should().BeEquivalentTo(expectedResult);
+    }
 }
