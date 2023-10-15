@@ -19,4 +19,12 @@ public class ShoppingListGeneratorController : Controller
         
         return View(recipes);
     }
+
+    [HttpGet]
+    public IActionResult GetIngredients()
+    {
+        var ingredients = _shoppingListGeneratorServices.GetAllIngredients();
+        
+        return View(ingredients);
+    }
 }

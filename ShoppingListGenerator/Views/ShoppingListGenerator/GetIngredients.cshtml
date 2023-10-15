@@ -1,0 +1,27 @@
+@using ShoppingListGenerator.Models.ShoppingListGeneratorModels
+@model IEnumerable<ShoppingListGenerator.Models.ShoppingListGeneratorModels.Ingredient>
+
+@{
+    ViewData["Title"] = "Get Ingredients";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Ingredients</h1>
+</div>
+
+<table class="table table-hover">
+    <caption>List of Ingredients</caption>
+    <thead>
+    <tr>
+        <th scope="col">Ingredient</th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider">
+    @foreach (Ingredient ingredient in Model)
+    {
+        <tr>
+            <td>@ingredient.Name</td>
+        </tr>
+    }
+    </tbody>
+</table>
