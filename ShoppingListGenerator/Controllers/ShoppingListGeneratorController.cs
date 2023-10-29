@@ -13,17 +13,17 @@ public class ShoppingListGeneratorController : Controller
     }
     
     [HttpGet]
-    public IActionResult GetRecipes()
+    public async Task<IActionResult> GetRecipesAsync()
     {
-        var recipes = _shoppingListGeneratorServices.GetAllRecipes();
+        var recipes = await _shoppingListGeneratorServices.GetAllRecipesAsync();
         
         return View(recipes);
     }
 
     [HttpGet]
-    public IActionResult GetIngredients()
+    public async Task<IActionResult> GetIngredientsAsync()
     {
-        var ingredients = _shoppingListGeneratorServices.GetAllIngredients();
+        var ingredients = await _shoppingListGeneratorServices.GetAllIngredientsAsync();
         
         return View(ingredients);
     }

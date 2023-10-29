@@ -1,35 +1,32 @@
+using Microsoft.EntityFrameworkCore;
 using ShoppingListGenerator.Models.ShoppingListGeneratorModels;
 
 namespace ShoppingListGenerator.Services;
 
 public interface IShoppingListGeneratorServices
 {
-    public IList<Recipe> GetAllRecipes();
-    public IList<Ingredient> GetAllIngredients();
+    public Task<IEnumerable<Recipe>> GetAllRecipesAsync();
+    public Task<IEnumerable<Ingredient>> GetAllIngredientsAsync();
 }
 
 public class ShoppingListGeneratorServices : IShoppingListGeneratorServices
 {
-    public IList<Recipe> GetAllRecipes()
+    private readonly ShoppingListContext _context;
+    public ShoppingListGeneratorServices(ShoppingListContext context)
     {
-        // Change to database implementation
-        var recipes = new List<Recipe>
-        {
-            new() { Id = 1, Name = "Greek Salad" },
-            new() { Id = 2, Name = "Chicken Adobo" }
-        };
+        _context = context;
+    }
+    
+    public async Task<IEnumerable<Recipe>> GetAllRecipesAsync()
+    {
+        var recipes = await _context.Recipes.ToListAsync();
 
         return recipes;
     }
 
-    public IList<Ingredient> GetAllIngredients()
+    public async Task<IEnumerable<Ingredient>> GetAllIngredientsAsync()
     {
-        // Change to database implementation
-        var ingredients = new List<Ingredient>
-        {
-            new() { IngredientId = 1, Name = "Red Onion" },
-            new() { IngredientId = 2, Name = "Olives" }
-        };
+        var ingredients = await _context.Ingredients.ToListAsync();
 
         return ingredients;
     }

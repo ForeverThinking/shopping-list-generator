@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using ShoppingListGenerator.Models.ShoppingListGeneratorModels;
 using ShoppingListGenerator.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IShoppingListGeneratorServices, ShoppingListGeneratorServices>();
+builder.Services.AddDbContext<ShoppingListContext>(options => 
+    options.UseNpgsql(builder.Configuration["PostgresConnection"]));
 
 var app = builder.Build();
 
