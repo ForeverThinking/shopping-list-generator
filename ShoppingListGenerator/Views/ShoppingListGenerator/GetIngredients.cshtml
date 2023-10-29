@@ -1,4 +1,3 @@
-@using ShoppingListGenerator.Models.ShoppingListGeneratorModels
 @model IEnumerable<ShoppingListGenerator.Models.ShoppingListGeneratorModels.Ingredient>
 
 @{
@@ -17,7 +16,7 @@
     </tr>
     </thead>
     <tbody class="table-group-divider">
-    @foreach (Ingredient ingredient in Model)
+    @foreach (var ingredient in Model)
     {
         <tr>
             <td>@ingredient.Name</td>

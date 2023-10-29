@@ -4,26 +4,33 @@ using ShoppingListGenerator.Services;
 
 namespace ShoppingListGeneratorTests.ServicesTests;
 
-public class GetIngredientsTests
+public class GetIngredientsTests : TestWithSqlite
 {
-    private readonly ShoppingListGeneratorServices _underTest = new();
+    private readonly ShoppingListGeneratorServices _underTest;
+
+    public GetIngredientsTests()
+    {
+        _underTest = new ShoppingListGeneratorServices(Context);
+    }
 
     [Fact]
-    public void GetIngredients_Called_ReturnsListOfIngredients()
+    public async Task GetIngredients_Called_ReturnsListOfIngredients()
     {
         // Arrange
-        var expectedResult = new List<Ingredient>()
+        await SeedIngredients();
+        
+        var data = new List<Ingredient>()
         {
-            new() { IngredientId = 1, Name = "Red Onion" },
-            new() { IngredientId = 2, Name = "Olives" }
+            new() { Id = 1, Name = "Red Onion" },
+            new() { Id = 2, Name = "Olives" }
         };
 
         // Act
-        var result = _underTest.GetAllIngredients();
+        var result = (await _underTest.GetAllIngredientsAsync()).ToList();
 
         // Assert
         result.Should().NotBeNull();
         result.Should().HaveCount(2);
-        result.Should().BeEquivalentTo(expectedResult);
+        result.Should().BeEquivalentTo(data);
     }
 }

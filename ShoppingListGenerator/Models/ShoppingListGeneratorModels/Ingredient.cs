@@ -5,7 +5,7 @@ namespace ShoppingListGenerator.Models.ShoppingListGeneratorModels;
 public class Ingredient
 {
     [Key]
-    public int IngredientId { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public IEnumerable<RecipeIngredient> RecipeIngredients { get; set; } = Enumerable.Empty<RecipeIngredient>();
+    public int Id { get; init; }
+    public string Name { get; init; } = string.Empty;
+    public IEnumerable<RecipeIngredient> RecipeIngredients { get; init; } = Enumerable.Empty<RecipeIngredient>();
 }

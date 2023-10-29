@@ -4,26 +4,33 @@ using FluentAssertions;
 
 namespace ShoppingListGeneratorTests.ServicesTests;
 
-public class GetRecipesTests
+public class GetRecipesTests : TestWithSqlite
 {
-    private readonly ShoppingListGeneratorServices _underTest = new();
+    private readonly ShoppingListGeneratorServices _underTest;
 
+    public GetRecipesTests()
+    {
+        _underTest = new ShoppingListGeneratorServices(Context);
+    }
+    
     [Fact]
-    public void GetRecipes_Called_ReturnsListOfRecipes()
+    public async Task GetRecipes_Called_ReturnsListOfRecipes()
     {
         // Arrange
-        var expectedResult = new List<Recipe>()
+        await SeedRecipes();
+            
+        var data = new List<Recipe>
         {
             new() { Id = 1, Name = "Greek Salad" },
             new() { Id = 2, Name = "Chicken Adobo" }
         };
 
         // Act
-        var result = _underTest.GetAllRecipes();
-
+        var result = (await _underTest.GetAllRecipesAsync()).ToList();
+        
         // Assert
         result.Should().NotBeNull();
         result.Should().HaveCount(2);
-        result.Should().BeEquivalentTo(expectedResult);
+        result.Should().BeEquivalentTo(data);
     }
 }
