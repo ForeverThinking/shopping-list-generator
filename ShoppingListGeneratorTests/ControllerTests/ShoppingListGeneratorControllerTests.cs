@@ -18,7 +18,7 @@ public class ShoppingListGeneratorControllerTests : Controller
     }
     
     [Fact]
-    public void GetRecipes_Called_ReturnsValidView()
+    public async Task GetRecipes_Called_ReturnsValidView()
     {
         // Arrange
         var expectedResult = new List<Recipe>()
@@ -27,10 +27,10 @@ public class ShoppingListGeneratorControllerTests : Controller
             new() { Id = 2, Name = "Chicken Adobo" }
         };
         
-        _shoppingListService.GetAllRecipes().Returns(expectedResult);
+        _shoppingListService.GetAllRecipesAsync().Returns(expectedResult);
         
         // Act
-        var result = _underTest.GetRecipes();
+        var result = await _underTest.GetRecipesAsync();
 
         // Assert
         var viewResult = Assert.IsType<ViewResult>(result);
@@ -39,19 +39,19 @@ public class ShoppingListGeneratorControllerTests : Controller
     }
     
     [Fact]
-    public void GetIngredients_Called_ReturnsValidView()
+    public async Task GetIngredients_Called_ReturnsValidView()
     {
         // Arrange
         var expectedResult = new List<Ingredient>()
         {
-            new() { IngredientId = 1, Name = "Red Onion" },
-            new() { IngredientId = 2, Name = "Olives" }
+            new() { Id = 1, Name = "Red Onion" },
+            new() { Id = 2, Name = "Olives" }
         };
         
-        _shoppingListService.GetAllIngredients().Returns(expectedResult);
+        _shoppingListService.GetAllIngredientsAsync().Returns(expectedResult);
         
         // Act
-        var result = _underTest.GetIngredients();
+        var result = await _underTest.GetIngredientsAsync();
 
         // Assert
         var viewResult = Assert.IsType<ViewResult>(result);
