@@ -9,22 +9,15 @@ public class ShoppingListContext : DbContext
     {
     }
 
-    public DbSet<Recipe> Recipes => Set<Recipe>();
-    public DbSet<Ingredient> Ingredients => Set<Ingredient>();
+    public DbSet<RecipeModel> Recipes => Set<RecipeModel>();
+    public DbSet<IngredientModel> Ingredients => Set<IngredientModel>();
+    public DbSet<MeasurementModel> Measurements => Set<MeasurementModel>();
+    public DbSet<RecipeIngredientModel> RecipeIngredients => Set<RecipeIngredientModel>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<RecipeIngredient>().HasKey(k => new { k.RecipeId, k.IngredientId });
-
-        modelBuilder.Entity<RecipeIngredient>()
-            .HasOne(x => x.Recipe)
-            .WithMany(x => x.RecipeIngredients)
-            .HasForeignKey(x => x.RecipeId);
-
-        modelBuilder.Entity<RecipeIngredient>()
-            .HasOne(x => x.Ingredient)
-            .WithMany(x => x.RecipeIngredients)
-            .HasForeignKey(x => x.IngredientId);
+        modelBuilder.Entity<RecipeIngredientModel>()
+            .HasKey(k => new { k.RecipeId, k.IngredientId, k.MeasurementId });
 
         base.OnModelCreating(modelBuilder);
     }

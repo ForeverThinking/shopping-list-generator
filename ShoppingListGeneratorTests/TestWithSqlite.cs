@@ -29,16 +29,16 @@ public class TestWithSqlite : IDisposable
 
     protected async Task SeedRecipes()
     {
-        Context.Recipes.Add(new Recipe { Id = 1, Name = "Greek Salad" });
-        Context.Recipes.Add(new Recipe { Id = 2, Name = "Chicken Adobo" });
+        Context.Recipes.Add(new RecipeModel { Id = 1, Name = "Greek Salad" });
+        Context.Recipes.Add(new RecipeModel { Id = 2, Name = "Chicken Adobo" });
         
         await Context.SaveChangesAsync();
     }
 
     protected async Task SeedIngredients()
     {
-        Context.Ingredients.Add(new Ingredient { Id = 1, Name = "Red Onion" });
-        Context.Ingredients.Add(new Ingredient { Id = 2, Name = "Olives" });
+        Context.Ingredients.Add(new IngredientModel { Id = 1, Name = "Red Onion" });
+        Context.Ingredients.Add(new IngredientModel { Id = 2, Name = "Olives" });
         
         await Context.SaveChangesAsync();
     }

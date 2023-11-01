@@ -21,7 +21,7 @@ namespace ShoppingListGenerator.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ShoppingListGenerator.Models.ShoppingListGeneratorModels.Ingredient", b =>
+            modelBuilder.Entity("ShoppingListGenerator.Models.ShoppingListGeneratorModels.IngredientModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -38,7 +38,39 @@ namespace ShoppingListGenerator.Migrations
                     b.ToTable("Ingredients");
                 });
 
-            modelBuilder.Entity("ShoppingListGenerator.Models.ShoppingListGeneratorModels.Recipe", b =>
+            modelBuilder.Entity("ShoppingListGenerator.Models.ShoppingListGeneratorModels.MeasurementModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Measurements");
+                });
+
+            modelBuilder.Entity("ShoppingListGenerator.Models.ShoppingListGeneratorModels.RecipeIngredientModel", b =>
+                {
+                    b.Property<int>("RecipeId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("IngredientId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MeasurementId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("RecipeId", "IngredientId", "MeasurementId");
+
+                    b.ToTable("RecipeIngredients");
+                });
+
+            modelBuilder.Entity("ShoppingListGenerator.Models.ShoppingListGeneratorModels.RecipeModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -53,53 +85,6 @@ namespace ShoppingListGenerator.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Recipes");
-                });
-
-            modelBuilder.Entity("ShoppingListGenerator.Models.ShoppingListGeneratorModels.RecipeIngredient", b =>
-                {
-                    b.Property<int>("RecipeId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("IngredientId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
-                    b.HasKey("RecipeId", "IngredientId");
-
-                    b.HasIndex("IngredientId");
-
-                    b.ToTable("RecipeIngredient");
-                });
-
-            modelBuilder.Entity("ShoppingListGenerator.Models.ShoppingListGeneratorModels.RecipeIngredient", b =>
-                {
-                    b.HasOne("ShoppingListGenerator.Models.ShoppingListGeneratorModels.Ingredient", "Ingredient")
-                        .WithMany("RecipeIngredients")
-                        .HasForeignKey("IngredientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ShoppingListGenerator.Models.ShoppingListGeneratorModels.Recipe", "Recipe")
-                        .WithMany("RecipeIngredients")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ingredient");
-
-                    b.Navigation("Recipe");
-                });
-
-            modelBuilder.Entity("ShoppingListGenerator.Models.ShoppingListGeneratorModels.Ingredient", b =>
-                {
-                    b.Navigation("RecipeIngredients");
-                });
-
-            modelBuilder.Entity("ShoppingListGenerator.Models.ShoppingListGeneratorModels.Recipe", b =>
-                {
-                    b.Navigation("RecipeIngredients");
                 });
 #pragma warning restore 612, 618
         }

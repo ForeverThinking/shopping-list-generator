@@ -19,7 +19,7 @@ public class GetIngredientsTests : TestWithSqlite
         // Arrange
         await SeedIngredients();
         
-        var data = new List<Ingredient>()
+        var data = new List<IngredientModel>()
         {
             new() { Id = 1, Name = "Red Onion" },
             new() { Id = 2, Name = "Olives" }

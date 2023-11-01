@@ -21,7 +21,7 @@ public class ShoppingListGeneratorControllerTests : Controller
     public async Task GetRecipes_Called_ReturnsValidView()
     {
         // Arrange
-        var expectedResult = new List<Recipe>()
+        var expectedResult = new List<RecipeModel>()
         {
             new() { Id = 1, Name = "Greek Salad" },
             new() { Id = 2, Name = "Chicken Adobo" }
@@ -34,7 +34,7 @@ public class ShoppingListGeneratorControllerTests : Controller
 
         // Assert
         var viewResult = Assert.IsType<ViewResult>(result);
-        var model = Assert.IsAssignableFrom<IList<Recipe>>(viewResult.ViewData.Model);
+        var model = Assert.IsAssignableFrom<IList<RecipeModel>>(viewResult.ViewData.Model);
         model.Should().BeEquivalentTo(expectedResult);
     }
     
@@ -42,7 +42,7 @@ public class ShoppingListGeneratorControllerTests : Controller
     public async Task GetIngredients_Called_ReturnsValidView()
     {
         // Arrange
-        var expectedResult = new List<Ingredient>()
+        var expectedResult = new List<IngredientModel>()
         {
             new() { Id = 1, Name = "Red Onion" },
             new() { Id = 2, Name = "Olives" }
@@ -55,7 +55,7 @@ public class ShoppingListGeneratorControllerTests : Controller
 
         // Assert
         var viewResult = Assert.IsType<ViewResult>(result);
-        var model = Assert.IsAssignableFrom<IList<Ingredient>>(viewResult.ViewData.Model);
+        var model = Assert.IsAssignableFrom<IList<IngredientModel>>(viewResult.ViewData.Model);
         model.Should().BeEquivalentTo(expectedResult);
     }
 }
