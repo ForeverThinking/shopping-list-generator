@@ -11,8 +11,8 @@ using ShoppingListGenerator.Models.ShoppingListGeneratorModels;
 namespace ShoppingListGenerator.Migrations
 {
     [DbContext(typeof(ShoppingListContext))]
-    [Migration("20231101225459_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20231102234305_UpdateModels")]
+    partial class UpdateModels
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,22 +41,6 @@ namespace ShoppingListGenerator.Migrations
                     b.ToTable("Ingredients");
                 });
 
-            modelBuilder.Entity("ShoppingListGenerator.Models.ShoppingListGeneratorModels.MeasurementModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Measurements");
-                });
-
             modelBuilder.Entity("ShoppingListGenerator.Models.ShoppingListGeneratorModels.RecipeIngredientModel", b =>
                 {
                     b.Property<int>("RecipeId")
@@ -65,10 +49,12 @@ namespace ShoppingListGenerator.Migrations
                     b.Property<int>("IngredientId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("MeasurementId")
+                    b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
-                    b.HasKey("RecipeId", "IngredientId", "MeasurementId");
+                    b.HasKey("RecipeId", "IngredientId");
+
+                    b.HasIndex("IngredientId");
 
                     b.ToTable("RecipeIngredients");
                 });
@@ -88,6 +74,35 @@ namespace ShoppingListGenerator.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Recipes");
+                });
+
+            modelBuilder.Entity("ShoppingListGenerator.Models.ShoppingListGeneratorModels.RecipeIngredientModel", b =>
+                {
+                    b.HasOne("ShoppingListGenerator.Models.ShoppingListGeneratorModels.IngredientModel", "Ingredient")
+                        .WithMany("RecipeIngredient")
+                        .HasForeignKey("IngredientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ShoppingListGenerator.Models.ShoppingListGeneratorModels.RecipeModel", "Recipe")
+                        .WithMany("RecipeIngredient")
+                        .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ingredient");
+
+                    b.Navigation("Recipe");
+                });
+
+            modelBuilder.Entity("ShoppingListGenerator.Models.ShoppingListGeneratorModels.IngredientModel", b =>
+                {
+                    b.Navigation("RecipeIngredient");
+                });
+
+            modelBuilder.Entity("ShoppingListGenerator.Models.ShoppingListGeneratorModels.RecipeModel", b =>
+                {
+                    b.Navigation("RecipeIngredient");
                 });
 #pragma warning restore 612, 618
         }

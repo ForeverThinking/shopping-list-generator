@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using ShoppingListGenerator.Models.ShoppingListGeneratorModels;
 using ShoppingListGenerator.Services;
 
 namespace ShoppingListGenerator.Controllers;
@@ -26,5 +27,19 @@ public class ShoppingListGeneratorController : Controller
         var ingredients = await _shoppingListGeneratorServices.GetAllIngredientsAsync();
         
         return View(ingredients);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetShoppingList()
+    {
+        // Test for now, will update with POST later
+        var test = new List<RecipeModel>
+        {
+            new() { Id = 1 }
+        };
+
+        var shoppingList = await _shoppingListGeneratorServices.GetShoppingListAsync(test);
+
+        return View(shoppingList);
     }
 }

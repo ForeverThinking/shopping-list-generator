@@ -7,6 +7,7 @@ public interface IShoppingListGeneratorServices
 {
     public Task<IEnumerable<RecipeModel>> GetAllRecipesAsync();
     public Task<IEnumerable<IngredientModel>> GetAllIngredientsAsync();
+    public Task<Dictionary<string, int>> GetShoppingListAsync(IEnumerable<RecipeModel> recipes);
 }
 
 public class ShoppingListGeneratorServices : IShoppingListGeneratorServices
@@ -29,5 +30,18 @@ public class ShoppingListGeneratorServices : IShoppingListGeneratorServices
         var ingredients = await _context.Ingredients.ToListAsync();
 
         return ingredients;
+    }
+
+    public async Task<Dictionary<string, int>> GetShoppingListAsync(IEnumerable<RecipeModel> recipes)
+    {
+        var recipeIds = recipes.Select(r => r.Id).ToArray();
+
+        var recipeIngredients = await _context.RecipeIngredients
+            .Where(ri => recipeIds.Contains(ri.RecipeId))
+            .Include(ri => ri.Ingredient)
+            .Include(ri => ri.Recipe)
+            .ToListAsync();
+
+        return recipeIngredients.ToDictionary(item => item.Ingredient!.Name!, item => item.Quantity);
     }
 }
