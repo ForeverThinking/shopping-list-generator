@@ -1,23 +1,25 @@
-@model Dictionary<string, int>
+@model Dictionary<string, int>;
 
 @{
-    ViewData["Title"] = "Get Recipes";
+    ViewData["Title"] = "Your Shopping List";
 }
 
-<table class="table table-hover">
-    <caption>Shopping List</caption>
+<h1>Your Shopping List</h1>
+
+<table class="table">
+    <caption>List of Ingredients</caption>
     <thead>
     <tr>
-        <th scope="col">Ingredient</th>
-        <th scope="col">Quantity</th>
+        <th>Ingredient</th>
+        <th>Quantity</th>
     </tr>
     </thead>
-    <tbody class="table-group-divider">
-    @foreach (KeyValuePair<string, int> item in Model)
+    <tbody>
+    @foreach (var ingredient in Model)
     {
         <tr>
-            <td>@item.Key</td>
-            <td>@item.Value</td>
+            <td>@ingredient.Key</td>
+            <td>@ingredient.Value</td>
         </tr>
     }
     </tbody>

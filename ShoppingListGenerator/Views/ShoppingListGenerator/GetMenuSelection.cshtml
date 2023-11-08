@@ -1,0 +1,34 @@
+@model List<ShoppingListGenerator.Models.ShoppingListGeneratorModels.MenuSelectionViewModel>;
+
+@{
+    ViewData["Title"] = "Select Your Menu";
+}
+
+<form asp-action="GetShoppingList" asp-controller="ShoppingListGenerator" method="post">
+    <table class="table">
+    <caption>List of Recipes</caption>
+        <thead>
+        <tr>
+            <td>Recipe</td>
+            <td>Add to list?</td>
+        </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <label asp-for="@Model[i].RecipeName">@Model[i].RecipeName</label>
+                    </td>
+                    <td>
+                        <input asp-for="@Model[i].RecipeId" type="hidden" />
+                        <input asp-for="@Model[i].IsSelected" type="checkbox"/>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+</form>

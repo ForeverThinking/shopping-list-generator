@@ -42,4 +42,21 @@ public class TestWithSqlite : IDisposable
         
         await Context.SaveChangesAsync();
     }
+
+    protected async Task SeedRecipeIngredients()
+    {
+        await SeedIngredients();
+        await SeedRecipes();
+
+        var recipeIngredients = new List<RecipeIngredientModel>
+        {
+            new() { RecipeId = 1, IngredientId = 1, Quantity = 1 },
+            new() { RecipeId = 1, IngredientId = 2, Quantity = 2 },
+            new() { RecipeId = 2, IngredientId = 1, Quantity = 3 },
+        };
+
+        await Context.AddRangeAsync(recipeIngredients);
+    
+        await Context.SaveChangesAsync();
+    }
 }
