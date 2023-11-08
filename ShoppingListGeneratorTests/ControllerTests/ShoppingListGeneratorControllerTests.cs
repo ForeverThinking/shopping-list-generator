@@ -58,4 +58,52 @@ public class ShoppingListGeneratorControllerTests : Controller
         var model = Assert.IsAssignableFrom<IList<IngredientModel>>(viewResult.ViewData.Model);
         model.Should().BeEquivalentTo(expectedResult);
     }
+    
+    [Fact]
+    public async Task GetMenuSelection_Called_ReturnsValidView()
+    {
+        // Arrange
+        var expectedResult = new List<MenuSelectionViewModel>()
+        {
+            new() { RecipeId = 1, RecipeName = "Test1", IsSelected = true },
+            new() { RecipeId = 1, RecipeName = "Test2", IsSelected = false }
+        };
+        
+        _shoppingListService.GetRecipesForMenuSelectionAsync().Returns(expectedResult);
+        
+        // Act
+        var result = await _underTest.GetMenuSelectionAsync();
+
+        // Assert
+        var viewResult = Assert.IsType<ViewResult>(result);
+        var model = Assert.IsAssignableFrom<IList<MenuSelectionViewModel>>(viewResult.ViewData.Model);
+        model.Should().BeEquivalentTo(expectedResult);
+    }
+
+    [Fact]
+    public async Task GetShoppingList_Called_ReturnsValidView()
+    {
+        // Arrange
+        var parameters = new List<MenuSelectionViewModel>()
+        {
+            new() { RecipeId = 1, RecipeName = "Test1", IsSelected = true },
+            new() { RecipeId = 1, RecipeName = "Test2", IsSelected = false }
+        };
+        
+        var expectedResult = new Dictionary<string, int>
+        {
+            { "Test1", 1 },
+            { "Test2", 2 }
+        };
+
+        _shoppingListService.GetShoppingListAsync(Arg.Any<IEnumerable<int>>()).Returns(expectedResult);
+
+        // Act
+        var result = await _underTest.GetShoppingList(parameters);
+
+        // Assert
+        var viewResult = Assert.IsType<ViewResult>(result);
+        var model = Assert.IsAssignableFrom<Dictionary<string, int>>(viewResult.ViewData.Model);
+        model.Should().BeEquivalentTo(expectedResult);
+    }
 }

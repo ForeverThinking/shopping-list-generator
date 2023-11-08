@@ -30,16 +30,21 @@ public class ShoppingListGeneratorController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetShoppingList()
+    public async Task<IActionResult> GetMenuSelectionAsync()
     {
-        // Test for now, will update with POST later
-        var test = new List<RecipeModel>
-        {
-            new() { Id = 1 }
-        };
+        var menuItems = await _shoppingListGeneratorServices.GetRecipesForMenuSelectionAsync();
 
-        var shoppingList = await _shoppingListGeneratorServices.GetShoppingListAsync(test);
+        return View(menuItems);
+    }
 
-        return View(shoppingList);
+    [HttpPost]
+    public async Task<IActionResult> GetShoppingList(List<MenuSelectionViewModel> menuSelection)
+    {
+        var ingredientIds = menuSelection.Where(ms => ms.IsSelected)
+            .Select(ms => ms.RecipeId);
+
+        var ingredients = await _shoppingListGeneratorServices.GetShoppingListAsync(ingredientIds);
+        
+        return View(ingredients);
     }
 }

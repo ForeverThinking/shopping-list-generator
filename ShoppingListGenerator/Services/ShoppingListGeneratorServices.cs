@@ -7,7 +7,8 @@ public interface IShoppingListGeneratorServices
 {
     public Task<IEnumerable<RecipeModel>> GetAllRecipesAsync();
     public Task<IEnumerable<IngredientModel>> GetAllIngredientsAsync();
-    public Task<Dictionary<string, int>> GetShoppingListAsync(IEnumerable<RecipeModel> recipes);
+    public Task<Dictionary<string, int>> GetShoppingListAsync(IEnumerable<int> recipeIds);
+    public Task<List<MenuSelectionViewModel>> GetRecipesForMenuSelectionAsync();
 }
 
 public class ShoppingListGeneratorServices : IShoppingListGeneratorServices
@@ -18,30 +19,27 @@ public class ShoppingListGeneratorServices : IShoppingListGeneratorServices
         _context = context;
     }
     
-    public async Task<IEnumerable<RecipeModel>> GetAllRecipesAsync()
+    public async Task<IEnumerable<RecipeModel>> GetAllRecipesAsync() 
+        => await _context.Recipes.ToListAsync();
+
+    public async Task<IEnumerable<IngredientModel>> GetAllIngredientsAsync() 
+        => await _context.Ingredients.ToListAsync();
+
+    public async Task<Dictionary<string, int>> GetShoppingListAsync(IEnumerable<int> recipeIds)
     {
-        var recipes = await _context.Recipes.ToListAsync();
-
-        return recipes;
-    }
-
-    public async Task<IEnumerable<IngredientModel>> GetAllIngredientsAsync()
-    {
-        var ingredients = await _context.Ingredients.ToListAsync();
-
-        return ingredients;
-    }
-
-    public async Task<Dictionary<string, int>> GetShoppingListAsync(IEnumerable<RecipeModel> recipes)
-    {
-        var recipeIds = recipes.Select(r => r.Id).ToArray();
-
         var recipeIngredients = await _context.RecipeIngredients
             .Where(ri => recipeIds.Contains(ri.RecipeId))
             .Include(ri => ri.Ingredient)
-            .Include(ri => ri.Recipe)
             .ToListAsync();
 
         return recipeIngredients.ToDictionary(item => item.Ingredient!.Name!, item => item.Quantity);
+    }
+
+    public async Task<List<MenuSelectionViewModel>> GetRecipesForMenuSelectionAsync()
+    {
+        var recipes = await GetAllRecipesAsync();
+
+        return recipes.Select(recipe => new MenuSelectionViewModel 
+            { RecipeId = recipe.Id, RecipeName = recipe.Name, IsSelected = false, }).ToList();
     }
 }
