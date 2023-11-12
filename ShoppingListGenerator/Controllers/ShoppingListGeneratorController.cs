@@ -14,7 +14,7 @@ public class ShoppingListGeneratorController : Controller
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetRecipesAsync()
+    public async Task<IActionResult> Recipes()
     {
         var recipes = await _shoppingListGeneratorServices.GetAllRecipesAsync();
         
@@ -22,7 +22,7 @@ public class ShoppingListGeneratorController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetIngredientsAsync()
+    public async Task<IActionResult> Ingredients()
     {
         var ingredients = await _shoppingListGeneratorServices.GetAllIngredientsAsync();
         
@@ -30,7 +30,7 @@ public class ShoppingListGeneratorController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetMenuSelectionAsync()
+    public async Task<IActionResult> MenuSelection()
     {
         var menuItems = await _shoppingListGeneratorServices.GetRecipesForMenuSelectionAsync();
 
@@ -38,7 +38,7 @@ public class ShoppingListGeneratorController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> GetShoppingList(List<MenuSelectionViewModel> menuSelection)
+    public async Task<IActionResult> ShoppingList(List<MenuSelectionViewModel> menuSelection)
     {
         var ingredientIds = menuSelection.Where(ms => ms.IsSelected)
             .Select(ms => ms.RecipeId);

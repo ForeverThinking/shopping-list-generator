@@ -3,11 +3,11 @@ using ShoppingListGenerator.Services;
 
 namespace ShoppingListGeneratorTests.ServicesTests;
 
-public class GetShoppingListTests : TestWithSqlite
+public class ShoppingListTests : TestWithSqlite
 {
     private readonly ShoppingListGeneratorServices _underTest;
 
-    public GetShoppingListTests()
+    public ShoppingListTests()
     {
         _underTest = new ShoppingListGeneratorServices(Context);
     }

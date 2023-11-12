@@ -30,7 +30,7 @@ public class ShoppingListGeneratorControllerTests : Controller
         _shoppingListService.GetAllRecipesAsync().Returns(expectedResult);
         
         // Act
-        var result = await _underTest.GetRecipesAsync();
+        var result = await _underTest.Recipes();
 
         // Assert
         var viewResult = Assert.IsType<ViewResult>(result);
@@ -51,7 +51,7 @@ public class ShoppingListGeneratorControllerTests : Controller
         _shoppingListService.GetAllIngredientsAsync().Returns(expectedResult);
         
         // Act
-        var result = await _underTest.GetIngredientsAsync();
+        var result = await _underTest.Ingredients();
 
         // Assert
         var viewResult = Assert.IsType<ViewResult>(result);
@@ -72,7 +72,7 @@ public class ShoppingListGeneratorControllerTests : Controller
         _shoppingListService.GetRecipesForMenuSelectionAsync().Returns(expectedResult);
         
         // Act
-        var result = await _underTest.GetMenuSelectionAsync();
+        var result = await _underTest.MenuSelection();
 
         // Assert
         var viewResult = Assert.IsType<ViewResult>(result);
@@ -99,7 +99,7 @@ public class ShoppingListGeneratorControllerTests : Controller
         _shoppingListService.GetShoppingListAsync(Arg.Any<IEnumerable<int>>()).Returns(expectedResult);
 
         // Act
-        var result = await _underTest.GetShoppingList(parameters);
+        var result = await _underTest.ShoppingList(parameters);
 
         // Assert
         var viewResult = Assert.IsType<ViewResult>(result);

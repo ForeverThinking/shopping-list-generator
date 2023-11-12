@@ -1,33 +1,33 @@
-using FluentAssertions;
 using ShoppingListGenerator.Models.ShoppingListGeneratorModels;
 using ShoppingListGenerator.Services;
+using FluentAssertions;
 
 namespace ShoppingListGeneratorTests.ServicesTests;
 
-public class GetIngredientsTests : TestWithSqlite
+public class RecipesTests : TestWithSqlite
 {
     private readonly ShoppingListGeneratorServices _underTest;
 
-    public GetIngredientsTests()
+    public RecipesTests()
     {
         _underTest = new ShoppingListGeneratorServices(Context);
     }
-
+    
     [Fact]
-    public async Task GetIngredients_Called_ReturnsListOfIngredients()
+    public async Task GetRecipes_Called_ReturnsListOfRecipes()
     {
         // Arrange
-        await SeedIngredients();
-        
-        var data = new List<IngredientModel>()
+        await SeedRecipes();
+            
+        var data = new List<RecipeModel>
         {
-            new() { Id = 1, Name = "Red Onion" },
-            new() { Id = 2, Name = "Olives" }
+            new() { Id = 1, Name = "Greek Salad" },
+            new() { Id = 2, Name = "Chicken Adobo" }
         };
 
         // Act
-        var result = (await _underTest.GetAllIngredientsAsync()).ToList();
-
+        var result = (await _underTest.GetAllRecipesAsync()).ToList();
+        
         // Assert
         result.Should().NotBeNull();
         result.Should().HaveCount(2);

@@ -4,11 +4,11 @@ using ShoppingListGenerator.Services;
 
 namespace ShoppingListGeneratorTests.ServicesTests;
 
-public class GetRecipesForMenuSelectionTests : TestWithSqlite
+public class RecipesForMenuSelectionTests : TestWithSqlite
 {
     private readonly ShoppingListGeneratorServices _underTest;
 
-    public GetRecipesForMenuSelectionTests()
+    public RecipesForMenuSelectionTests()
     {
         _underTest = new ShoppingListGeneratorServices(Context);
     }
